@@ -115,9 +115,22 @@ var mediaPlayer:MediaPlayer?=null
         }else{
             playpauseImageButton?.setBackgroundResource(R.drawable.play_icon)
         }
+        mediaPlayer?.setOnCompletionListener {
+            onSongComplete()
+        }
+        clickHandler()
     }
     fun clickHandler(){
         shuffelImageButon?.setOnClickListener({
+            if(currentSongHelper?.isShuffle as Boolean){
+                shuffelImageButon?.setBackgroundResource(R.drawable.shuffle_white_icon)
+                currentSongHelper?.isShuffle=false
+            }else{
+                currentSongHelper?.isShuffle=true
+                currentSongHelper?.isLoop=false
+                shuffelImageButon?.setBackgroundResource(R.drawable.shuffle_icon)
+                loopImageButton?.setBackgroundResource(R.drawable.loop_white_icon)
+            }
 
         })
         nextImageButton?.setOnClickListener({
@@ -211,6 +224,37 @@ currentSongHelper?.isPlaying=true
         }catch (e:Exception){
             e.printStackTrace()
         }
+
+    }
+    fun onSongComplete(){
+        if(currentSongHelper?.isShuffle as Boolean){
+     playNext("PlayNextLikeNormalShuffel")
+            currentSongHelper?.isPlaying=true
+
+        }else{
+            if (currentSongHelper?.isLoop as Boolean){
+                currentSongHelper?.isPlaying=true
+                var nextSong=fetchSongs.get(currentPosition)
+                currentSongHelper?.songPath=nextSong?.songData
+                currentSongHelper?.songTitle=nextSong?.songTitle
+                currentSongHelper?.currentPosition=currentPosition
+                currentSongHelper?.songId=nextSong?.songID as Long
+                mediaPlayer?.reset()
+                try{
+                    mediaPlayer?.setDataSource(myActivity,Uri.parse(currentSongHelper?.songPath))
+                    mediaPlayer?.prepare()
+                    mediaPlayer?.start()
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
+            }
+            else{
+                playNext("PlayNextLikeNormal")
+                currentSongHelper?.isPlaying=true
+            }
+
+        }
+
 
     }
 
