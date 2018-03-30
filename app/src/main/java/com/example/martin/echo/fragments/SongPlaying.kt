@@ -95,6 +95,7 @@ var mediaPlayer:MediaPlayer?=null
             currentSongHelper?.songId=songId
             currentSongHelper?.songTitle=songTitle
             currentSongHelper?.currentPosition=currentPosition
+            updateTextViews(currentSongHelper?.songTitle as String,currentSongHelper?.songArtist as String)
 
         }
 
@@ -195,6 +196,7 @@ currentSongHelper?.isPlaying=true
             mediaPlayer?.setDataSource(myActivity,Uri.parse(currentSongHelper?.songPath))
             mediaPlayer?.prepare()
             mediaPlayer?.start()
+            updateTextViews(currentSongHelper?.songTitle as String,currentSongHelper?.songArtist as String)
         }catch (e:Exception){
             e.printStackTrace()
         }
@@ -221,6 +223,8 @@ currentSongHelper?.isPlaying=true
             mediaPlayer?.setDataSource(myActivity,Uri.parse(currentSongHelper?.songPath))
             mediaPlayer?.prepare()
             mediaPlayer?.start()
+            updateTextViews(currentSongHelper?.songTitle as String,currentSongHelper?.songArtist as String)
+
         }catch (e:Exception){
             e.printStackTrace()
         }
@@ -234,7 +238,7 @@ currentSongHelper?.isPlaying=true
         }else{
             if (currentSongHelper?.isLoop as Boolean){
                 currentSongHelper?.isPlaying=true
-                var nextSong=fetchSongs.get(currentPosition)
+                var nextSong=fetchSongs?.get(currentPosition)
                 currentSongHelper?.songPath=nextSong?.songData
                 currentSongHelper?.songTitle=nextSong?.songTitle
                 currentSongHelper?.currentPosition=currentPosition
@@ -244,6 +248,8 @@ currentSongHelper?.isPlaying=true
                     mediaPlayer?.setDataSource(myActivity,Uri.parse(currentSongHelper?.songPath))
                     mediaPlayer?.prepare()
                     mediaPlayer?.start()
+                    updateTextViews(currentSongHelper?.songTitle as String,currentSongHelper?.songArtist as String)
+
                 }catch (e:Exception){
                     e.printStackTrace()
                 }
@@ -254,10 +260,12 @@ currentSongHelper?.isPlaying=true
             }
 
         }
-
-
     }
 
+    fun updateTextViews(songtitle:String,songArtist:String){
+        songTitleView?.setText(songtitle)
+        songArtistView?.setText(songArtist)
+    }
     }
 
 

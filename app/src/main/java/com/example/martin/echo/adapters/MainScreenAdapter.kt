@@ -39,7 +39,7 @@ class MainScreenAdapter(_songDetails:ArrayList<Songs>,_context: Context): Recycl
         args.putString("songArtist",songObject?.artist)
         args.putString("path",songObject?.songData)
         args.putString("songTitle",songObject?.songTitle)
-        args.putInt("songId",songObject?.songID.toInt() as Int)
+        args.putInt("songId",songObject?.songID?.toInt() as Int)
         args.putInt("songPosition",position)
         args.putParcelableArrayList("songData",songDetails)
 
