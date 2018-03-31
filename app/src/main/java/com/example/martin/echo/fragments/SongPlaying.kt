@@ -40,7 +40,11 @@ var mediaPlayer:MediaPlayer?=null
     var currentPosition: Int=0
     var fetchSongs:ArrayList<Songs>?=null
 
+var updateSongTime=object :Runnable{
+    override fun run() {
 
+    }
+}
 
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
